@@ -28,17 +28,17 @@ public class Program implements CommandLineRunner {
     @Autowired
     private JdbcService jdbcService;
 
-    private int numberOfEntities = 100_000;
+    private int numberOfEntities = 10_000;
 
     @Override
     public void run(String... args) throws Exception {
-        // startJpaSingle();
-        // startJpaList();
-        // startJpaListSaveAll();
-        // startJpaListSaveAllWithBatches();
-        // startMyBatisSingle();
+        startJpaSingle();
+        startJpaList();
+        startJpaListSaveAll();
+        startJpaListSaveAllWithBatches();
+        startMyBatisSingle();
         startMyBatisList();
-        // starJdbcList();
+        starJdbcList();
     }
     
     private void starJdbcList() {
@@ -140,7 +140,7 @@ public class Program implements CommandLineRunner {
         sw.start();
         jpaService.bulkInsertWithBatches(entities);
         sw.stop();
-        log.info("Generating entities (JPA list save all) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Generating entities (JPA list save all with batches) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private List<TestEntity> generateEntities(int numberOfEntities) {
