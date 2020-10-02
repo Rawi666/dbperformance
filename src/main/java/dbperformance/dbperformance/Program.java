@@ -35,7 +35,6 @@ public class Program implements CommandLineRunner {
         startJpaSingle();
         startJpaList();
         startJpaListSaveAll();
-        startJpaListSaveAllWithBatches();
         startMyBatisSingle();
         startMyBatisList();
         starJdbcList();
@@ -52,7 +51,7 @@ public class Program implements CommandLineRunner {
         sw.start();
         jdbcService.insert(entities);
         sw.stop();
-        log.info("Generating entities (jdbc list) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Inserting entities (jdbc list) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private void startMyBatisSingle() {
@@ -68,7 +67,7 @@ public class Program implements CommandLineRunner {
             myBatisService.insert(e);
         }
         sw.stop();
-        log.info("Generating entities (MyBatis single) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Inserting entities (MyBatis single) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private void startMyBatisList() {
@@ -82,7 +81,7 @@ public class Program implements CommandLineRunner {
         sw.start();
         myBatisService.insert(entities);
         sw.stop();
-        log.info("Generating entities (MyBatis list) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Inserting entities (MyBatis list) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private void startJpaSingle() {
@@ -98,7 +97,7 @@ public class Program implements CommandLineRunner {
             jpaService.insert(e);
         }
         sw.stop();
-        log.info("Generating entities (JPA single) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Inserting entities (JPA single) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private void startJpaList() {
@@ -112,7 +111,7 @@ public class Program implements CommandLineRunner {
         sw.start();
         jpaService.insert(entities);
         sw.stop();
-        log.info("Generating entities (JPA list) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Inserting entities (JPA list) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private void startJpaListSaveAll() {
@@ -126,21 +125,7 @@ public class Program implements CommandLineRunner {
         sw.start();
         jpaService.bulkInsert(entities);
         sw.stop();
-        log.info("Generating entities (JPA list save all) took: {}s", sw.getTotalTimeSeconds());
-    }
-
-    private void startJpaListSaveAllWithBatches() {
-        var sw = new StopWatch();
-        sw.start();
-        var entities = generateEntities(numberOfEntities);
-        sw.stop();
-        log.info("Generating entities took: {}ms", sw.getTotalTimeMillis());
-
-        sw = new StopWatch();
-        sw.start();
-        jpaService.bulkInsertWithBatches(entities);
-        sw.stop();
-        log.info("Generating entities (JPA list save all with batches) took: {}s", sw.getTotalTimeSeconds());
+        log.info("Inserting entities (JPA list save all) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private List<TestEntity> generateEntities(int numberOfEntities) {
