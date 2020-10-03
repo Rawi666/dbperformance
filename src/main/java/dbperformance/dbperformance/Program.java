@@ -13,6 +13,7 @@ import dbperformance.dbperformance.jdbc.JdbcService;
 import dbperformance.dbperformance.jpa.JpaService;
 import dbperformance.dbperformance.jpa.TestEntity;
 import dbperformance.dbperformance.mybatis.MyBatisService;
+import dbperformance.dbperformance.vertx.VertxService;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -28,6 +29,9 @@ public class Program implements CommandLineRunner {
     @Autowired
     private JdbcService jdbcService;
 
+    @Autowired
+    private VertxService vertxService;
+
     private int numberOfEntities = 10_000;
 
     @Override
@@ -38,6 +42,38 @@ public class Program implements CommandLineRunner {
         startMyBatisSingle();
         startMyBatisList();
         starJdbcList();
+        starVertxSingle();
+        starVertxList();
+    }
+
+    private void starVertxSingle() {
+        var sw = new StopWatch();
+        sw.start();
+        var entities = generateEntities(numberOfEntities);
+        sw.stop();
+        log.info("Generating entities took: {}ms", sw.getTotalTimeMillis());
+        
+        sw = new StopWatch();
+        sw.start();
+        for (var e : entities) {
+            vertxService.insert(e);
+        }
+        sw.stop();
+        log.info("Inserting entities (vertx single) took: {}s", sw.getTotalTimeSeconds());
+    }
+
+    private void starVertxList() {
+        var sw = new StopWatch();
+        sw.start();
+        var entities = generateEntities(numberOfEntities);
+        sw.stop();
+        log.info("Generating entities took: {}ms", sw.getTotalTimeMillis());
+        
+        sw = new StopWatch();
+        sw.start();
+        vertxService.insert(entities);
+        sw.stop();
+        log.info("Inserting entities (vertx list) took: {}s", sw.getTotalTimeSeconds());
     }
     
     private void starJdbcList() {

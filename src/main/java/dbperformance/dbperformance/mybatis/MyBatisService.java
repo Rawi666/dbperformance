@@ -21,7 +21,7 @@ public class MyBatisService {
     }
 
     public void insert(List<TestEntity> entities) {
-        var batches = Lists.partition(entities, 1000);
+        var batches = Lists.partition(entities, 200);
 
         for (var batch : batches) {
             mapper.bulkInsert(batch);
