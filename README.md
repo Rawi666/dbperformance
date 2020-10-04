@@ -8,5 +8,6 @@ Inserting entities (MyBatis single) took: 8.764022431s
 Inserting entities (MyBatis list) took: 3.223761256s
 Inserting entities (jdbc list) took: 2.152497262s
 Inserting entities (vertx single) took: 91.075988821s
-Inserting entities (vertx list) took: 1.287974732s
+Inserting entities (vertx list) took: 1.644300539s
+Inserting entities (vertx list without transaction) took: 1.287974732s
 ```

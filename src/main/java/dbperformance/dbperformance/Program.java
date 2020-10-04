@@ -36,14 +36,15 @@ public class Program implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        startJpaSingle();
-        startJpaList();
-        startJpaListSaveAll();
-        startMyBatisSingle();
-        startMyBatisList();
-        starJdbcList();
-        starVertxSingle();
-        starVertxList();
+        // startJpaSingle();
+        // startJpaList();
+        // startJpaListSaveAll();
+        // startMyBatisSingle();
+        // startMyBatisList();
+        // starJdbcList();
+        // starVertxSingle();
+        starVertxList(); 
+        // starVertxListWithoutTransaction();
     }
 
     private void starVertxSingle() {
@@ -74,6 +75,20 @@ public class Program implements CommandLineRunner {
         vertxService.insert(entities);
         sw.stop();
         log.info("Inserting entities (vertx list) took: {}s", sw.getTotalTimeSeconds());
+    }
+
+    private void starVertxListWithoutTransaction() {
+        var sw = new StopWatch();
+        sw.start();
+        var entities = generateEntities(numberOfEntities);
+        sw.stop();
+        log.info("Generating entities took: {}ms", sw.getTotalTimeMillis());
+        
+        sw = new StopWatch();
+        sw.start();
+        vertxService.insertWithoutTransaction(entities);
+        sw.stop();
+        log.info("Inserting entities (vertx list without transaction) took: {}s", sw.getTotalTimeSeconds());
     }
     
     private void starJdbcList() {
