@@ -32,7 +32,7 @@ public class Program implements CommandLineRunner {
     @Autowired
     private VertxService vertxService;
 
-    private int numberOfEntities = 10_000;
+    private int numberOfEntities = 100_000;
 
     @Override
     public void run(String... args) throws Exception {
@@ -41,9 +41,9 @@ public class Program implements CommandLineRunner {
         // startJpaListSaveAll();
         // startMyBatisSingle();
         // startMyBatisList();
-        // starJdbcList();
+        starJdbcList();
         // starVertxSingle();
-        starVertxList(); 
+        // starVertxList(); 
         // starVertxListWithoutTransaction();
     }
 
