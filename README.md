@@ -10,4 +10,5 @@ Inserting entities (jdbc list) took: 2.152497262s
 Inserting entities (vertx single) took: 91.075988821s
 Inserting entities (vertx list) took: 1.644300539s
 Inserting entities (vertx list without transaction) took: 1.287974732s
+Inserting entities (pg bulk insert) took: 0.389145117s
 ```
