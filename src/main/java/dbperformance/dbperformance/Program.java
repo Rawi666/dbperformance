@@ -13,6 +13,7 @@ import dbperformance.dbperformance.jdbc.JdbcService;
 import dbperformance.dbperformance.jpa.JpaService;
 import dbperformance.dbperformance.jpa.TestEntity;
 import dbperformance.dbperformance.mybatis.MyBatisService;
+import dbperformance.dbperformance.pgbulkinsert.PgBulkInsertService;
 import dbperformance.dbperformance.vertx.VertxService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,9 @@ public class Program implements CommandLineRunner {
     @Autowired
     private VertxService vertxService;
 
+    @Autowired
+    private PgBulkInsertService pgBulkInsertService;
+
     private int numberOfEntities = 100_000;
 
     @Override
@@ -41,10 +45,25 @@ public class Program implements CommandLineRunner {
         // startJpaListSaveAll();
         // startMyBatisSingle();
         // startMyBatisList();
-        starJdbcList();
+        // starJdbcList();
         // starVertxSingle();
         // starVertxList(); 
         // starVertxListWithoutTransaction();
+        starPgBulkInsert();
+    }
+
+    private void starPgBulkInsert() {
+        var sw = new StopWatch();
+        sw.start();
+        var entities = generateEntities(numberOfEntities);
+        sw.stop();
+        log.info("Generating entities took: {}ms", sw.getTotalTimeMillis());
+        
+        sw = new StopWatch();
+        sw.start();
+        pgBulkInsertService.insert(entities);
+        sw.stop();
+        log.info("Inserting entities (pg bulk insert) took: {}s", sw.getTotalTimeSeconds());
     }
 
     private void starVertxSingle() {
