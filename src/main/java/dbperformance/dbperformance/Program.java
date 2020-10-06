@@ -47,9 +47,9 @@ public class Program implements CommandLineRunner {
         // startMyBatisList();
         // starJdbcList();
         // starVertxSingle();
-        // starVertxList(); 
+        starVertxList();
         // starVertxListWithoutTransaction();
-        starPgBulkInsert();
+        // starPgBulkInsert();
     }
 
     private void starPgBulkInsert() {
